@@ -6,17 +6,23 @@ import sys
 ipList = set("")
 ipBanned = set("")
 
+#This function takes in a list of ip's then if they are not
+# already there and not banned it addes them ot the list.
 def verify_ips(listToAdd):
     for ip in listToAdd:
         if (ip not in ipBanned):
             if ip not in ipList:
                 ipList.add(ip)
-                
+
+#This function adds a IP to the banned list if it is not
+# already there.
 def add_to_banned(listToAdd):
     for ip in listToAdd:
         if (ip not in ipBanned):
             ipBanned.add(ip)
-        
+
+#This function extracts the ip form a large text string or a
+# files contents
 def extract_ips(fileContent):
     pattern = r"((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([ (\[]?(\.|dot)[ )\]]?(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})"
     ips = [each[0] for each in re.findall(pattern, fileContent)]   
@@ -28,18 +34,23 @@ def extract_ips(fileContent):
         ips.insert(location, ip) 
     return ips
 
+#This is the basic single IP add
 def add_ip():
     ip_to_add = input("IP to add:")
     verify_ips(extract_ips(ip_to_add))
-    
+
+#This is the basic add ip to ban list
 def ban_ip():
     ip_to_add = input("IP to ban:")
     add_to_banned(extract_ips(ip_to_add))
     
+#This prints a set of ips
 def print_ip_list(ipsToPrint):
     for ip in ipsToPrint:
         print(ip)
 
+#This is where i intend to implemet pasting of a log into the console
+# to add many ips to the list
 def add_many_ips():
     to_ip=""
     lineIn=""
@@ -48,7 +59,8 @@ def add_many_ips():
         to_ip = to_ip + input()
     print(to_ip)
     verify_ips(extract_ips(to_ip))
-    
+
+#The main menu of the util
 def menu():
     choice=""
     while choice!="-1":
@@ -80,6 +92,10 @@ def menu():
             print("Invalid option.")
     print("Exiting...")
 
+#Main function
+#If there is one argument it is assumed to be a to hack list
+#if there are two arguments the first is the hack list the
+#   secound is the banned list
 def main():
     if len(sys.argv)>1:
         with open(sys.argv[1], 'r') as myfile:
