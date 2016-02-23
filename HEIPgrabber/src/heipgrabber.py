@@ -107,3 +107,5 @@ def main():
             data=myfile.read().replace('\n', '')
         add_to_banned(extract_ips(data))
     menu()
+
+main()
