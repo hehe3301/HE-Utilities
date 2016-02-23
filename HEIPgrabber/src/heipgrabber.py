@@ -1,6 +1,3 @@
-# To change this license header, choose License Headers in Project Properties.
-# To change this template file, choose Tools | Templates
-# and open the template in the editor.
 import re
 import sys
 ipList = set("")
@@ -110,5 +107,3 @@ def main():
             data=myfile.read().replace('\n', '')
         add_to_banned(extract_ips(data))
     menu()
-    
-main()
