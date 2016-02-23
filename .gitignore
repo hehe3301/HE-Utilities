@@ -107,3 +107,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/HEIPgrabber/nbproject/private/
