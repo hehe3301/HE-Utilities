@@ -109,4 +109,8 @@ $RECYCLE.BIN/
 *.lnk
 /HEIPgrabber/nbproject/private/
 
+#Output files
 *.ips
+
+# Komodo Project
+*.komodoproject
