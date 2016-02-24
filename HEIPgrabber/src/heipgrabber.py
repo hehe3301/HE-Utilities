@@ -43,6 +43,7 @@ def ban_ip():
     
 #This prints a set of ips
 def print_ip_list(ipsToPrint):
+    print("Num ip's: " + str(len(ipsToPrint)) )
     for ip in ipsToPrint:
         print(ip)
 
@@ -57,6 +58,14 @@ def add_many_ips():
     print(to_ip)
     verify_ips(extract_ips(to_ip))
 
+def purge():
+    oldSet = ipList.copy()
+    ipList.clear()
+    for ip in oldSet:
+        verify_ips(ip)
+
+def export_lists():
+    pass
 #The main menu of the util
 def menu():
     choice=""
@@ -65,24 +74,28 @@ def menu():
                 "Main Menu:\n"+
                 "  1) Add ip to hack list.\n"+
                 "  2) Add many ip's to hack list.(unimplemented)\n"+
-                "  3) Add ip to banned list.\n"+
-                "  4) Print Hack list.\n"+
-                "  5) Print Banned list.\n"+
-                "  6) Export Lists.(unimplemented)\n"+
+                "  3) Import ip's from file.(unimplemented)\n"+
+                "  4) Add ip to banned list.\n"+
+                "  5) Print Hack list.\n"+
+                "  6) Print Banned list.\n"+
+                "  7) Export Lists.(unimplemented)\n"+
+                "  8) Purge banned ips.\n"+
                 " -1) Exit.")
         choice = input("Option:")
         if choice == "1":
             add_ip()
         elif choice == "2":
             add_many_ips()
-        elif choice == "3":
-            ban_ip()
         elif choice == "4":
-            print_ip_list(ipList)
+            ban_ip()
         elif choice == "5":
-            print_ip_list(ipBanned)
+            print_ip_list(ipList)
         elif choice == "6":
-            print("you chose 6")
+            print_ip_list(ipBanned)
+        elif choice == "7":
+            print("you chose 7")
+        elif choice == "8":
+            purge()
         elif choice == "-1":
             pass
         else:
@@ -98,14 +111,14 @@ def menu():
 #   python heipgrabber.py toHack.txt
 #   python heipgrabber.py toHack.txt banList.txt
 def main():
-    if len(sys.argv)>1: #if there is a argument given
-        with open(sys.argv[1], 'r') as myfile:
-            data=myfile.read().replace('\n', '')
-        verify_ips(extract_ips(data))
     if len(sys.argv)>2: #if there is a secound argument given
         with open(sys.argv[2], 'r') as myfile:
             data=myfile.read().replace('\n', '')
         add_to_banned(extract_ips(data))
+    if len(sys.argv)>1: #if there is a argument given
+        with open(sys.argv[1], 'r') as myfile:
+            data=myfile.read().replace('\n', '')
+        verify_ips(extract_ips(data))   
     menu()
 
 main()
