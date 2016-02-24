@@ -66,6 +66,31 @@ def purge():
 
 def export_lists():
     pass
+
+def import_bans(ban_file):
+    with open(ban_file, 'r') as myfile:
+        data=myfile.read().replace('\n', '')
+    add_to_banned(extract_ips(data))
+        
+def import_ips(ip_file):
+    with open(ip_file, 'r') as myfile:
+        data=myfile.read().replace('\n', '')
+    verify_ips(extract_ips(data))
+    
+def export_bans():
+    myfile = input("Filename to export ban list too:")
+    file = open(myfile,'w')
+    for ip in ipBanned:
+        file.write(ip + "\n")
+    file.close()
+    
+def export_ips():
+    myfile = input("Filename to export ip list too:")
+    file = open(myfile,'w')
+    for ip in ipList:
+        file.write(ip + "\n")
+    file.close()
+    
 #The main menu of the util
 def menu():
     choice=""
@@ -84,22 +109,29 @@ def menu():
         choice = input("Option:")
         if choice == "1":
             add_ip()
+            print("Done!")
         elif choice == "2":
             add_many_ips()
+            print("Done!")
         elif choice == "4":
             ban_ip()
+            print("Done!")
         elif choice == "5":
             print_ip_list(ipList)
         elif choice == "6":
             print_ip_list(ipBanned)
         elif choice == "7":
-            print("you chose 7")
+            export_ips()
+            export_bans()
+            print("Done!")
         elif choice == "8":
             purge()
+            print("Done!")
         elif choice == "-1":
             pass
         else:
             print("Invalid option.")
+        
     print("Exiting...")
 
 #Main function
@@ -112,13 +144,9 @@ def menu():
 #   python heipgrabber.py toHack.txt banList.txt
 def main():
     if len(sys.argv)>2: #if there is a secound argument given
-        with open(sys.argv[2], 'r') as myfile:
-            data=myfile.read().replace('\n', '')
-        add_to_banned(extract_ips(data))
+        import_bans(sys.argv[2])
     if len(sys.argv)>1: #if there is a argument given
-        with open(sys.argv[1], 'r') as myfile:
-            data=myfile.read().replace('\n', '')
-        verify_ips(extract_ips(data))   
+        import_ips(sys.argv[1]) 
     menu()
 
 main()
